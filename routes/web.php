@@ -16,4 +16,10 @@ use App\Http\Controllers\TodoController;
 
 // Base route: http://laraveltodoapp.test/
 
-Route::get('/', [TodoController::class, "index"])->name('index');
+Route::get('/', [TodoController::class, "index"])->name('todo.index');
+
+Route::post('/todo-save', [TodoController::class, "save"])->name('todo.save');
+
+Route::get('/todo-done/{id}', [TodoController::class, "markDone"])->name('todo.done');
+
+Route::get('/todo-delete/{id}', [TodoController::class, "delete"])->name('todo.delete');
