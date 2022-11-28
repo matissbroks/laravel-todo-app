@@ -20,6 +20,6 @@ Route::get('/', [TodoController::class, "index"])->name('todo.index');
 
 Route::post('/todo-save', [TodoController::class, "save"])->name('todo.save');
 
-Route::get('/todo-done/{id}', [TodoController::class, "markDone"])->name('todo.done');
+Route::get('/todo-done/{todo}', [TodoController::class, "markDone"])->name('todo.done');
 
-Route::get('/todo-delete/{id}', [TodoController::class, "delete"])->name('todo.delete');
+Route::get('/todo-delete/{todo}', [TodoController::class, "delete"])->name('todo.delete');

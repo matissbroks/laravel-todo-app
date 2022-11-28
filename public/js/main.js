@@ -33,6 +33,11 @@ window.onload = function WindowLoad(event) {
                 let parsedResult = JSON.parse(this.response);
 
                 console.log(parsedResult);
+                document.getElementById("response-place").innerHTML = parsedResult.respHTML;
+
+                setTimeout(function(){
+                    location.reload();
+                }, 3000);
             }
         };
 

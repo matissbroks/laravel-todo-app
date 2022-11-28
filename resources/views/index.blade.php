@@ -47,30 +47,39 @@
                 </div>
             </form>
 
-            <div class="row mb-2 border border-dark">
-                <div class="col bg-success text-center">
-                    <h3>Success</h3>
+            <span id="response-place"></span>
+
+            @if (session()->has('infoType') && session()->has('infoMsg'))
+                <div class="row mb-2 border border-dark">
+                    <div class="col bg-{{ session('infoType') }} text-center">
+                        <h3>{{ session('infoMsg') }}</h3>
+                    </div>
                 </div>
-            </div>
+            @endif
 
             <div class="row border border-dark py-2">
                 <div class="col">
-                    @foreach($todos AS $todo)
+                    @foreach($todos AS $key => $todo)
+                        @php /** @var \App\Models\Todo $todo */ @endphp
                         <div class="row mb-1">
+                            <div class="col-1">
+                                {{ $key + 1 }}
+                            </div>
+
                             <div class="col">
-                                @if($todo->get("is_done"))<del> @endif
-                                {{ $todo->get("name") }}
-                                    @if($todo->get("is_done"))</del> @endif
+                                @if($todo->is_done)<del>@endif
+                                    {{ $todo->title }}
+                                @if($todo->is_done)</del> @endif
                             </div>
 
                             <div class="col d-flex justify-content-center">
-                                @if(!$todo->get("is_done"))
-                                    <button class="btn btn-success mr-2" id="done{{ $todo->get("id") }}" value="{{ $todo->get("id") }}">Done</button>
-                                    <input type="hidden" id="doneURL{{ $todo->get("id") }}" value="{{ route("todo.done", ["id" => $todo->get("id")]) }}">
+                                @if(!$todo->is_done)
+                                    <button class="btn btn-success mr-2" id="done{{ $todo->id }}" value="{{ $todo->id }}">Done</button>
+                                    <input type="hidden" id="doneURL{{ $todo->id }}" value="{{ route("todo.done", ["todo" => $todo->id]) }}">
                                 @endif
 
-                                <button class="btn btn-danger" id="delete{{ $todo->get("id") }}" value="{{ $todo->get("id") }}">Delete</button>
-                                <input type="hidden" id="deleteURL{{ $todo->get("id") }}" value="{{ route("todo.delete", ["id" => $todo->get("id")]) }}">
+                                <button class="btn btn-danger" id="delete{{ $todo->id }}" value="{{ $todo->id }}">Delete</button>
+                                <input type="hidden" id="deleteURL{{ $todo->id }}" value="{{ route("todo.delete", ["todo" => $todo->id]) }}">
                             </div>
                         </div>
                     @endforeach
